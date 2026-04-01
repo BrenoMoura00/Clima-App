@@ -1,9 +1,9 @@
-import Chat from "./components/Chat";
+import { HomePage } from "./pages/homePage";
 
 export default function App() {
-  return (
-    <div className="w-screen h-screen p-4 bg-gray-100">
-      <Chat />
+  return(
+    <div className="w-full h-screen">
+      <HomePage />
     </div>
-  );
+  )
 }
