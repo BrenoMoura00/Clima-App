@@ -117,15 +117,20 @@ export function HomePage() {
   };
 
   return (
-    <div className="min-h-screen max-w-md mx-auto bg-linear-to-b from-[#6488DA] to-[#3B2063] flex flex-col pt-12 font-sans overflow-hidden relative">
+    <div className="min-h-screen max-w-md mx-auto bg-linear-to-b from-[#1c1c1c] via-[#0a0a0a] to-black flex flex-col pt-12 font-sans overflow-x-hidden relative text-white">
       
+      {/* Efeitos de Luz Ambiente (Glow) no Background */}
+      <div className="absolute top-0 left-[-20%] w-[140%] h-100 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none z-0 mix-blend-screen"></div>
+      <div className="absolute top-[20%] right-[-30%] w-75 h-75 bg-purple-500/10 rounded-full blur-[120px] pointer-events-none z-0 mix-blend-screen"></div>
+
       {showErrorPopup && (
         <ErrorPopup cityName={cidadeBusca} onClose={() => setShowErrorPopup(false)} />
       )}
 
       <WeatherEffects condition={weatherData?.condition || 'sunny'} />
 
-      <div className="flex flex-col items-center w-full shrink-0 relative z-10">
+      {/* Adicionado mb-16 aqui para afastar a temperatura do painel inferior */}
+      <div className="flex flex-col items-center w-full shrink-0 relative z-10 px-4 mb-16">
         {weatherData && (
           <>
             <Header city={weatherData.city} onSearch={handleSearch} />
@@ -138,21 +143,21 @@ export function HomePage() {
         )}
       </div>
       
-      <div className="rounded-4xl border-gray-400 border-t-2 mt-4 relative z-10">
-        <div className="flex flex-col w-full mt-4 mb-6 ml-3">
-          <p className="text-white font-bold text-sm">
+      {/* Área da previsão com design Glassmorphism */}
+      <div className="rounded-t-[40px] bg-white/5 backdrop-blur-xl border-t border-white/10 mt-auto pt-8 pb-10 relative z-10 w-full shadow-[0_-15px_40px_rgba(0,0,0,0.5)] flex-1 flex flex-col">
+        <div className="flex flex-col w-full px-6">
+          <p className="text-gray-400 font-medium text-sm tracking-wide mb-6">
             Previsão para os próximos 5 dias
           </p>
+          
           {weatherData?.alert && <WeatherAlert message={weatherData.alert} />}
+          
           {forecastData.length > 0 && (
             <ForecastCarousel forecast={forecastData} />
           )}
         </div>
       </div>
       
-      <div className="border-gray-400 rounded-4xl border-t-2 h-34 relative z-10"></div>
-      
-      <div className="flex-1 w-full flex flex-col justify-end pb-6 mt-4 relative z-10"></div>
     </div>
   );
 }
