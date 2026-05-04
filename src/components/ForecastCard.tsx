@@ -18,7 +18,7 @@ export const ForecastCard = ({ day, condition, rainProbability, temperature, isA
   };
 
   const baseClasses = "flex flex-col items-center justify-between rounded-[32px] w-[72px] h-[140px] py-4 border shrink-0 transition-all";
-  const activeClasses = isActive ? "bg-[#4B237D] border-[#6D3DB3]" : "bg-white/10 border-white/20";
+  const activeClasses = isActive ? "bg-[#111111] border-[#6D3DB3]" : "bg-white/10 border-white/20";
 
   return (
     <div className={`${baseClasses} ${activeClasses}`}>
