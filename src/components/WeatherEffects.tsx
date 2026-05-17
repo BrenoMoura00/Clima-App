@@ -1,7 +1,7 @@
 import LottieBundle from "lottie-react";
 import animacaoChuva from "../assets/chuva.json";
 
-const Lottie = (LottieBundle as any).default || LottieBundle;
+const Lottie = LottieBundle;
 
 interface WeatherEffectsProps {
   condition: string;
