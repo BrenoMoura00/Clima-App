@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ChatInput from "./ChatInput";
 import ChatMessage from "./ChatMessage";
+import { api } from "../services/api";
 
 type Message = {
   id: number;
@@ -8,27 +9,45 @@ type Message = {
   sender: "user" | "bot";
 };
 
-export default function Chat() {
+type ChatProps = {
+  cidadeAtual?: string;
+  climaAtual?: string;
+};
+
+export default function Chat({ cidadeAtual = "São Paulo", climaAtual = "25°C e limpo" }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
 
-  function handleSend(text: string) {
+  async function handleSend(text: string) {
     const userMsg: Message = {
       id: Date.now(),
       text,
       sender: "user",
     };
-
+    
     setMessages((prev) => [...prev, userMsg]);
 
-    const botMsg: Message = {
-      id: Date.now() + 1,
-      text: "Resposta automática (substituir pela API depois)",
-      sender: "bot",
-    };
+    const promptEnriquecido = `Você é um assistente virtual amigável especializado em turismo e clima. INFORMAÇÕES DE CONTEXTO: O usuário está atualmente na cidade de ${cidadeAtual} e o clima lá agora é de ${climaAtual}. Responda à seguinte pergunta do usuário levando em consideração estritamente a cidade em que ele está e o clima atual para dar a melhor recomendação possível. PERGUNTA DO USUÁRIO: "${text}"`;
 
-    setTimeout(() => {
+    try {
+      const response = await api.post('/ia', { text: promptEnriquecido });
+      const botText = response.data.candidates[0].content.parts[0].text;
+
+      const botMsg: Message = {
+        id: Date.now() + 1,
+        text: botText,
+        sender: "bot",
+      };
+      
       setMessages((prev) => [...prev, botMsg]);
-    }, 400);
+
+    } catch (error) {
+      const errorMsg: Message = {
+        id: Date.now() + 1,
+        text: "Desculpe, ocorreu um erro ao consultar a IA.",
+        sender: "bot",
+      };
+      setMessages((prev) => [...prev, errorMsg]);
+    }
   }
 
   return (
@@ -38,7 +57,6 @@ export default function Chat() {
           <ChatMessage key={m.id} text={m.text} sender={m.sender} />
         ))}
       </div>
-
       <ChatInput onSend={handleSend} />
     </div>
   );
