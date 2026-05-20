@@ -16,16 +16,37 @@ export interface ForecastData {
 }
 
 export interface ClimaAtual {
-  cidade: string;
-  temperatura: number;
-  sensacaoTermica: number;
-  descricao: string;
-  pais: string;
+  // Propriedades da API OpenWeather
+  status?: number;
+  cod?: string | number;
+  message?: string;
+  name?: string;
+  main?: {
+    temp?: number;
+    feels_like?: number;
+    humidity?: number;
+    pressure?: number;
+  };
+  weather?: Array<{
+    description?: string;
+    main?: string;
+    icon?: string;
+  }>;
+  // Propriedades alternativas da API brasileira
+  cidade?: string;
+  temperatura?: number;
+  sensacaoTermica?: number;
+  descricao?: string;
+  pais?: string;
 }
 
 export interface PrevisaoItem {
-  dataHora: string;
-  temperatura: number;
-  descricao: string;
-  pais: string;
+  // Propriedades da API
+  dataHora?: string;
+  temperatura?: number;
+  descricao?: string;
+  probabilidadeChuva?: number;
+  pais?: string;
+  // Propriedade adicionada dinamicamente no código
+  diaFormatado?: string;
 }
