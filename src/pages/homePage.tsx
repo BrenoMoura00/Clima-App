@@ -152,7 +152,7 @@ export function HomePage() {
     const promptEnriquecido = `Você é um guia turístico e assistente de clima educado, amigável e direto. CONTEXTO: O usuário está em ${cidadeAtual}, a temperatura é de ${temperaturaAtual} com tempo registrado como "${condicaoAtual}". PERGUNTA: "${message}". INSTRUÇÕES: Responda em Português do Brasil de forma natural, simpática e clara. Não seja excessivamente formal (nunca use termos como "Prezado", "Consulente" ou linguagem robótica) e também evite gírias. Traduza os termos meteorológicos (ex: "partly-cloudy" para "parcialmente nublado"). Dê uma recomendação útil baseada no clima e seja conciso na resposta.`;
 
     try {
-      const response = await fetch('http://localhost:8080/api/ia', {
+      const response = await fetch('https://clima-api-dy98.onrender.com/api/ia', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
